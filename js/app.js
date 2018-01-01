@@ -24,7 +24,7 @@ for (let i = 0; i < studentObjList.length; i += 1){
 				$('<ul class="student-list" id="page'+hrefId+'"></ul>').insertAfter('.page-header');
 				for(let j = 0; j < studentObjList[i].length; j +=1){
 					$('#page'+hrefId).append(studentObjList[i][j]);
-					$('#page'+hrefId).toggle(false);
+					$('#page'+hrefId).hide();
 			}
 			} else {
 				$('<ul class="student-list" id="page'+hrefId+'"></ul>').insertAfter('.page-header');
@@ -40,4 +40,18 @@ for (let i = 0; i < studentObjList.length; i += 1){
 			}
 }
 	
-$(".hrefstudent" ).on("click", function() {console.log( $( this ).text() );});
+$(".hrefstudent" ).on("click", (e)=>{
+	console.log(e.srcElement.id);
+	const pagesList = $('.pagination ul').children();
+	for(let i = 0; i < pagesList.length; i += 1){
+			const id = i+1;
+		if('hrefId'+pagesList[i].innerText != e.srcElement.id){
+				 $('#page'+id).hide();
+				 $('#hrefId'+id).removeClass('active');
+		} else {
+			console.log('hrefId'+pagesList[i].innerText);
+				$('#page'+id).show();
+			  $('#hrefId'+id).addClass('active');
+		}
+	}
+});
