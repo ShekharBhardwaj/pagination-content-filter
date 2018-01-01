@@ -4,6 +4,7 @@ const paginationDiv = '<div class="pagination"><ul class="hrefstudent"></ul></di
 const $paginationList = $('.pagination ul');
 const totalStudentShow =  10;
 //Appending pagination to Page div
+$('.student-list').addClass('initial-list');
 $pageDivSelector.append(paginationDiv);
 //console.log($studentList);
 let internalIndex = 0;
@@ -16,7 +17,12 @@ while($studentList.length) {
     studentObjList.push($studentList.splice(0,10));
 }
 
-console.log(studentObjList.length);
+//Adding search box 
+$('.page-header h2').after(`
+<div class="student-search">
+	<input placeholder="Search for students...">
+	<button class="search-button">Search</button>
+	</div>`);
 
 for (let i = 0; i < studentObjList.length; i += 1){
 			const hrefId = i +1;
@@ -41,7 +47,6 @@ for (let i = 0; i < studentObjList.length; i += 1){
 }
 	
 $(".hrefstudent" ).on("click", (e)=>{
-	console.log(e.srcElement.id);
 	const pagesList = $('.pagination ul').children();
 	for(let i = 0; i < pagesList.length; i += 1){
 			const id = i+1;
@@ -49,9 +54,35 @@ $(".hrefstudent" ).on("click", (e)=>{
 				 $('#page'+id).hide();
 				 $('#hrefId'+id).removeClass('active');
 		} else {
-			console.log('hrefId'+pagesList[i].innerText);
 				$('#page'+id).show();
 			  $('#hrefId'+id).addClass('active');
 		}
 	}
 });
+
+$('.search-button').on('click',function(e){
+	 let studentSearch = $('.student-search input').val().toLowerCase();
+	console.log(studentSearch);
+	const searchDiaplayList = [];
+	console.log(studentObjList.length);
+	const studentDatum = document.getElementsByClassName('student-item');
+	for(let i = 0; i < studentDatum.length; i +=1) {
+			let datumList = studentDatum[i].innerText
+							 .trim()
+							 .replace( /\n/g, "" )
+							 .trim().split( " " )
+							 .filter(String);
+						//console.log(datumList);
+						console.log((datumList[0].startsWith(studentSearch) 
+												 || datumList[1].startsWith(studentSearch)
+												 || datumList[2].startsWith(studentSearch)));
+//			if(datumList[0].toLowerCase().startsWith(studentSearch, 10)
+//				 || datumList[1].toLowerCase().startsWith(studentSearch, 10) 
+//				 || datumList[2].toLowerCase().startsWith(studentSearch, 10)){
+//					console.log('found');
+//				 } else {
+//					 console.log('not found');
+//				 }
+	}
+});
+
