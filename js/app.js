@@ -40,3 +40,4 @@ for (let i = 0; i < studentObjList.length; i += 1){
 			}
 }
 	
+$(".hrefstudent" ).on("click", function() {console.log( $( this ).text() );});
